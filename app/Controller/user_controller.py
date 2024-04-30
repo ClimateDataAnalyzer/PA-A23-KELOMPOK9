@@ -1,6 +1,6 @@
 from View import user_view,main_view
 from Model import db_mysql
-from Controller import linkedlist_controller, useracc_controller
+from Controller import linkedlist_controller
 from prettytable import PrettyTable
 import os
 import time

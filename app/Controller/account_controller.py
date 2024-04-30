@@ -2,9 +2,8 @@ from Model import db_mysql
 from View import main_view
 from View import admin_view
 from View import user_view
-from Controller import user_controller
 import mysql.connector
-import sys, os, time
+import sys, os, pwinput
 
 def registrasiUser():
     print("▐▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▌")
@@ -13,7 +12,7 @@ def registrasiUser():
     
     input_nick = input("Berikan Nickname yang anda inginkan : ").strip()
     input_email = input("Berikan Email anda : ").strip()
-    input_password = input("Berikan Password anda : ").strip()
+    input_password = pwinput.pwinput("Berikan Password anda : ").strip()
     input_askot = input("Dimana Kota anda berada : ").strip()
 
     # Validasi input
@@ -67,12 +66,12 @@ def login():
     os.system("cls")
     print("▐▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▌")
     print("                  LOGIN                  ")
-    print("▐▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▌")
+    print("▐▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▌")
     
     input_attempts = 0
     while input_attempts < 3:
         input_nick = str(input("Nickname : "))
-        input_password = str(input("Password : "))
+        input_password = pwinput.pwinput("Password : ")
         
         try:
             cursor = db_mysql.connection.cursor()
