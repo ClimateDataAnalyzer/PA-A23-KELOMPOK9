@@ -49,6 +49,9 @@ def mainProgram(): #Program Utama
             elif menu_input == 3:
                 print("Anda Keluar Program")
                 break
+        except ValueError:
+            print("\nWajib Mengiputkan Angka!.")
+            time.sleep(1)
         except KeyboardInterrupt:
             print("\nCtrl+C terdeteksi! Silakan gunakan menu untuk keluar dari program.")
             while True:
@@ -62,3 +65,10 @@ def mainProgram(): #Program Utama
                         print("Pilihan tidak valid. Silakan pilih 'y' untuk keluar atau 'n' untuk kembali.")
                 except KeyboardInterrupt:
                     print("\nCtrl+C terdeteksi! Silakan gunakan menu untuk keluar dari program.")
+                except EOFError: 
+                    print("Ctrl+Z terdeteksi! Silakan gunakan menu untuk keluar dari program.")
+                    time.sleep(1)
+                    break
+        except EOFError:
+            print("Ctrl+Z terdeteksi! Silakan gunakan menu untuk keluar dari program.")
+            time.sleep(1)
