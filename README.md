@@ -1139,3 +1139,686 @@ def hapusKota():
 Fungsi hapusKota() memungkinkan administrator untuk menghapus data kota dari database setelah konfirmasi.
 #
 - Controller - useracc_controller.py
+```
+def tambahUser():
+    admin_view.tambahData()
+    input_nick = input("Berikan Nickname yang diinginkan : ").strip()
+    input_email = input("Berikan Email yang diinginkan : ").strip()
+    input_password = input("Berikan Password yang diinginkan : ").strip()
+    input_askot = input("Berikan Kota Asal : ").strip()
+
+    if not input_nick or not input_email or not input_password or not input_askot:
+        print("Data tidak boleh kosong.")
+        time.sleep(1)
+        return
+
+    try:
+        new_user = (input_nick, input_email, input_password, input_askot)
+
+        linkedlist = linkedlist_controller.LinkedList()
+        linkedlist.insert(new_user)
+
+        cursor = db_mysql.connection.cursor()
+        query_check = "SELECT * FROM user WHERE nickname = %s"
+        cursor.execute(query_check, (input_nick,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            print("Nickname sudah digunakan. Silakan gunakan yang lain.")
+            time.sleep(1)
+            return
+        else:
+            query_insert = "INSERT INTO user (nickname, email, password, asal_kota) VALUES (%s, %s, %s, %s)"
+            cursor.execute(query_insert, new_user)
+            db_mysql.connection.commit()
+            print("User berhasil ditambahkan ke database.")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+    except KeyboardInterrupt:
+        print("Anda melakukan CTRL + C, Anda akan keluar program")
+        sys.exit()
+```
+Fungsi tambahUser() memungkinkan administrator untuk menambahkan pengguna baru ke dalam database. Administrator diminta untuk memasukkan nickname, email, password, dan kota asal pengguna. Data yang dimasukkan akan divalidasi, dan jika sesuai, akan ditambahkan ke database.
+```
+def lihatUser():
+    admin_view.lihatData()    
+    try:
+        cursor = db_mysql.connection.cursor()
+        query_count = "SELECT COUNT(*) FROM user"
+        cursor.execute(query_count)
+        total_rows = cursor.fetchone()[0]
+
+        if total_rows == 0:
+            print("Tidak ada pengguna yang terdaftar.")
+            return
+
+        current_row = 0
+        page = 1
+        while current_row < total_rows:
+            query_select = "SELECT * FROM user LIMIT 25 OFFSET %s"
+            cursor.execute(query_select, (current_row,))
+            users = cursor.fetchall()
+            
+            os.system("cls")
+            print(f"Daftar Pengguna - Halaman {page}:")
+            pt = PrettyTable()
+            pt.field_names = ["ID", "Nickname", "Email", "Password", "Kota Asal"]
+            for user in users:
+                pt.add_row([user[0], user[1], user[2],user [3], user[4]])
+            print(pt)
+
+            admin_view.opsiLihatUser()
+            option = input("» Masukkan pilihan Anda: ")
+
+            if option == '1':
+                current_row += 25
+                page += 1
+            elif option == '2':
+                if page > 1:
+                    current_row -= 25
+                    page -= 1
+                else:
+                    os.system("cls")
+                    print("Anda sudah berada di halaman pertama.")
+                    time.sleep(1)
+            elif option == '3':
+                sortingUser()
+            elif option == '4':
+                searchingUser()
+            elif option == '5':
+                return
+            
+    except mysql.connector.Error as err:
+        print("Error:", err)
+```
+Fungsi lihatUser() digunakan untuk menampilkan daftar pengguna yang terdaftar dalam database. Administrator dapat melihat pengguna-pengguna dalam halaman-halaman, mengatur sorting, dan melakukan pencarian.
+```
+def searchingUser():
+    os.system("cls")
+    ambilDataUser()
+
+    print("Pilih jenis pencarian:")
+    print("1. Search by Nickname")
+    print("2. Search by Asal Kota")
+    option = input("» Masukkan pilihan Anda: ")
+
+    if option == '1':
+        keyword = input("Masukkan Nickname yang ingin dicari: ").lower()
+        found_user = LinkedList.jumpSearch(keyword, "nickname")
+    elif option == '2':
+        keyword = input("Masukkan Asal Kota yang ingin dicari: ").lower()
+        query_select = "SELECT * FROM user WHERE LOWER(asal_kota) = %s"
+        cursor = db_mysql.connection.cursor()
+        cursor.execute(query_select, (keyword,))
+        users = cursor.fetchall()
+
+        if not users:
+            print("Data tidak ditemukan.")
+            return
+
+        print(f"Pengguna dengan asal kota '{keyword.capitalize()}':")
+        pt = PrettyTable()
+        pt.field_names = ["ID User", "Nickname", "Email", "Password", "Asal Kota"]
+        for user in users:
+            pt.add_row([user[0], user[1], user[2], user[3], user[4]])
+        print(pt)
+
+        print(f"Total pengguna dari {keyword.capitalize()}: {len(users)}")
+        input("Tekan enter untuk melanjutkan...")
+        return
+    else:
+        print("Pilihan tidak valid.")
+        return
+
+    if found_user:
+        tabel = PrettyTable()
+        tabel.field_names = ["ID User", "Nickname", "Email", "Password", "Asal Kota"]
+        tabel.add_row([found_user["id_user"], found_user["nickname"], found_user["email"], found_user["password"], found_user["asal_kota"]])
+        print(tabel)
+    else:
+        print("Data tidak ditemukan.")
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi searchingUser() memungkinkan administrator untuk melakukan pencarian pengguna berdasarkan nickname atau kota asal. Hasil pencarian akan ditampilkan jika data ditemukan.
+```
+def sortingUser():
+    os.system("cls")
+    LinkedList.clear()
+    ambilDataUser()
+    daftarUsers = []
+    current = LinkedList.head
+    while current:
+        current.data["nickname"] = current.data["nickname"].lower()
+        daftarUsers.append(current.data)
+        current = current.next
+
+    print("Pilih urutan pengurutan:")
+    print("1. Ascending (A-Z)")
+    print("2. Descending (Z-A)")
+    urutan = input("» Masukkan pilihan Anda: ")
+
+    if urutan == '1':
+        sortedUsers = sorted(daftarUsers, key=lambda x: x["nickname"])
+    elif urutan == '2':
+        sortedUsers = sorted(daftarUsers, key=lambda x: x["nickname"], reverse=True)
+    else:
+        print("Pilihan tidak valid.")
+        return
+
+    tabel = PrettyTable()
+    tabel.field_names = ["ID User", "Nickname", "Email", "Password", "Asal Kota"]
+    for user in sortedUsers:
+        tabel.add_row([user["id_user"], user["nickname"], user["email"], user["password"], user["asal_kota"]])
+    print(tabel)
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi sortingUser() memungkinkan administrator untuk mengurutkan daftar pengguna berdasarkan nickname secara ascending atau descending.
+```
+def ambilDataUser():
+    try:
+        LinkedList.clear()
+        query = "SELECT * FROM user"
+        cursor = db_mysql.connection.cursor()
+        cursor.execute(query)
+        hasil = cursor.fetchall()
+        for user in hasil:
+            dataUser = {
+                "id_user": user[0],
+                "nickname": user[1],
+                "email": user[2],
+                "password": user[3],
+                "asal_kota": user[4]
+            }
+            LinkedList.insert(dataUser)
+    except mysql.connector.Error as err:
+        print(f"Error MySQL: {err.msg}")
+        input("Tekan enter untuk melanjutkan...")
+```
+Fungsi ambilDataUser() digunakan untuk mengambil data pengguna dari database dan menyimpannya dalam linked list.
+```
+def updateUser():
+    admin_view.updateData()
+    nickname = input("Masukkan Nickname yang ingin diperbarui: ").strip()
+    try:
+        cursor = db_mysql.connection.cursor()
+        query_select = "SELECT * FROM user WHERE nickname = %s"
+        cursor.execute(query_select, (nickname,))
+        user = cursor.fetchone()
+
+        if not user:
+            print("Nickname tidak ditemukan.")
+            time.sleep(1)
+            return
+
+        admin_view.opsiUpdateUser()
+        option = input("» Masukkan pilihan Anda: ")
+
+        if option == '1':
+            new_nickname = input("Masukkan Nickname baru: ").strip()
+            if not new_nickname:
+                print("Nickname tidak boleh kosong.")
+                time.sleep(1)
+                return
+            check_query = "SELECT * FROM user WHERE nickname = %s"
+            cursor.execute(check_query, (new_nickname,))
+            existing_user = cursor.fetchone()
+            if existing_user:
+                print("Nickname sudah digunakan. Silakan gunakan yang lain.")
+                time.sleep(1)
+            else:
+                update_query = "UPDATE user SET nickname = %s WHERE id_user = %s"
+                cursor.execute(update_query, (new_nickname, user[0]))
+                db_mysql.connection.commit()
+                print("Nickname berhasil diperbarui.")
+                time.sleep(1)
+        elif option == '2':
+            new_email = input("Masukkan Email baru: ").strip()
+            if not new_email:
+                print("Email tidak boleh kosong.")
+                time.sleep(1)
+                return
+            update_query = "UPDATE user SET email = %s WHERE id_user = %s"
+            cursor.execute(update_query, (new_email, user[0]))
+            db_mysql.connection.commit()
+            print("Email berhasil diperbarui.")
+            time.sleep(1)
+        elif option == '3':
+            new_password = input("Masukkan Password baru: ").strip()
+            if not new_password:
+                print("Password tidak boleh kosong.")
+                time.sleep(1)
+                return
+            update_query = "UPDATE user SET password = %s WHERE id_user = %s"
+            cursor.execute(update_query, (new_password, user[0]))
+            db_mysql.connection.commit()
+            print("Password berhasil diperbarui.")
+            time.sleep(1)
+        elif option == '4':
+            new_asal_kota = input("Masukkan Asal Kota baru: ").strip()
+            if not new_asal_kota:
+                print("Asal Kota tidak boleh kosong.")
+                time.sleep(1)
+                return
+            update_query = "UPDATE user SET asal_kota = %s WHERE id_user = %s"
+            cursor.execute(update_query, (new_asal_kota, user[0]))
+            db_mysql.connection.commit()
+            print("Asal Kota berhasil diperbarui.")
+            time.sleep(1)
+        elif option == '5':
+            return
+        else:
+            print("Pilihan tidak valid.")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+```
+Fungsi updateUser() memungkinkan administrator untuk memperbarui informasi tentang pengguna yang ada dalam database.
+```
+def hapusUser():
+    admin_view.hapusData()
+    nickname = input("Masukkan Nickname pengguna yang ingin dihapus: ")
+    try:
+        cursor = db_mysql.connection.cursor()
+        query_select = "SELECT * FROM user WHERE nickname = %s"
+        cursor.execute(query_select, (nickname,))
+        user = cursor.fetchone()
+
+        if not user:
+            print("Pengguna dengan Nickname tersebut tidak ditemukan.")
+            return
+
+        confirm = input(f"Apakah Anda yakin ingin menghapus pengguna '{nickname}'? (y/n): ").lower()
+
+        if confirm == 'y':
+            delete_query = "DELETE FROM user WHERE nickname = %s"
+            cursor.execute(delete_query, (nickname,))
+            db_mysql.connection.commit()
+            print("Pengguna berhasil dihapus dari database.")
+            time.sleep(1)
+        elif confirm == 'n':
+            print("Penghapusan dibatalkan.")
+            time.sleep(1)
+        else:
+            print("Masukan tidak valid. Penghapusan dibatalkan.")
+            time.sleep(1)
+    except mysql.connector.Error as err:
+        print("Error:", err)
+        time.sleep(1)
+```
+Fungsi hapusUser() memungkinkan administrator untuk menghapus data pengguna dari database setelah konfirmasi.
+#
+- Controller - linkedlist_controller.py
+```
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+```
+Class Node adalah representasi dari simpul dalam linked list. Setiap simpul memiliki dua atribut: data untuk menyimpan data dan next untuk menunjukkan ke simpul berikutnya dalam linked list.Dan Class LinkedList adalah implementasi dari linked list. Konstruktor __init__() membuat linked list kosong dengan menetapkan head (kepala) linked list menjadi None. Fungsi insert() digunakan untuk menyisipkan data baru ke dalam linked list. Jika linked list kosong, simpul baru dibuat dan diatur sebagai kepala. Jika tidak, fungsi akan mencari simpul terakhir dalam linked list dan menambahkan simpul baru setelahnya.
+```
+    def clear(self):
+        self.head = None
+```
+Fungsi clear(self): Mengosongkan linked list dengan mengatur head menjadi None, sehingga semua simpul terhapus dari linked list.
+```
+    def display(self):
+        current = self.head
+        while current:
+            print(current.data)
+            current = current.next
+```
+Fungsi display(self): Menampilkan isi dari linked list dengan mengunjungi setiap simpul, dimulai dari head, dan mencetak datanya.
+```
+    def quickSort(self, data):
+        if len(data) <= 1:
+            return data
+        else:
+            pivot = data[0]
+
+            less_than_pivot = [x for x in data[1:] if x <= pivot]
+            greater_than_pivot = [x for x in data[1:] if x > pivot]
+
+            return self.quickSort(less_than_pivot) + [pivot] + self.quickSort(greater_than_pivot)
+```
+Fungsi quickSort(self, data): Melakukan pengurutan data menggunakan algoritma Quicksort. Jika panjang data kurang dari atau sama dengan 1, data tersebut sudah terurut dan langsung dikembalikan. Jika tidak, elemen pertama (pivot) dipilih, kemudian data dibagi menjadi dua bagian: elemen yang lebih kecil dari atau sama dengan pivot, dan elemen yang lebih besar dari pivot. Kemudian, fungsi quickSort() diterapkan secara rekursif pada kedua bagian ini, dan hasilnya digabungkan dengan pivot di tengahnya.
+```
+    def jumpSearch(self, key, field):
+        if not self.head:
+            return None
+
+        current = self.head
+        while current:
+            if current.data[field].lower() == key:
+                return current.data
+            current = current.next
+        
+        return None
+```
+Fungsi jumpSearch(self, key, field): Melakukan pencarian dalam linked list berdasarkan nilai kunci (key) dan bidang (field). Jika linked list kosong, fungsi mengembalikan None. Jika tidak, pencarian dilakukan dengan mengunjungi setiap simpul, dimulai dari head, dan memeriksa apakah nilai dalam bidang yang ditentukan sama dengan nilai kunci (dengan mengabaikan case sensitive). Jika ditemukan, fungsi mengembalikan data dari simpul tersebut. Jika tidak, fungsi mengembalikan None.
+#
+### Controller
+- Controller - user_controller.py
+```
+  def informasiIklim():
+    user_view.lihatData()
+    try:
+        cursor = db_mysql.connection.cursor()
+        query_count = "SELECT COUNT(*) FROM data_iklim"
+        cursor.execute(query_count)
+        total_rows = cursor.fetchone()[0]
+
+        if total_rows == 0:
+            print("Tidak ada iklim yang terdaftar.")
+            return
+
+        current_row = 0
+        page = 1
+        while current_row < total_rows:
+            query_select = "SELECT * FROM data_iklim LIMIT 25 OFFSET %s"
+            cursor.execute(query_select, (current_row,))
+            hasil = cursor.fetchall()
+
+            os.system("cls")
+            print(f"Daftar Iklim - Halaman {page}:")
+            pt = PrettyTable()
+            pt.field_names = ["Nama Kota", "ID Iklim", "Kelembapan", "Curah Hujan", "Suhu Celcius", "Kecepatan Angin", "Kualitas Udara", "Rentan Tanggal"]
+            for column in hasil:
+                nama_kota = column[0][:20] + "..." if len(column[0]) > 23 else column[0]
+                kelembapan = column[2][:20] + "..." if len(column[2]) > 23 else column[2]
+                curah_hujan = column[3][:20] + "..." if len(column[3]) > 23 else column[3]
+                suhu_celcius = column[4][:20] + "..." if len(column[4]) > 23 else column[4]
+                kecepatan_angin = column[5][:20] + "..." if len(column[5]) > 23 else column[5]
+                kualitas_udara = column[6][:20] + "..." if len(column[6]) > 23 else column[6]
+                rentan_tanggal = column[7][:20] + "..." if len(column[7]) > 23 else column[7]
+                pt.add_row([nama_kota, column[1], kelembapan, curah_hujan, suhu_celcius, kecepatan_angin, kualitas_udara, rentan_tanggal])
+            print(pt)
+
+            user_view.opsiLihatIklim()
+            option = input("» Masukkan pilihan Anda: ") 
+
+            if option == '1':
+                current_row += 25
+                page += 1
+            elif option == '2':
+                if page > 1:
+                    current_row -= 25
+                    page -= 1
+                else:
+                    os.system("cls")
+                    print("Anda sudah berada di halaman pertama.")
+                    time.sleep(1)
+            elif option == '3':
+                sortingIklim()
+            elif option == '4':
+                searchingIklim()
+            elif option == '5':
+                return
+            else:
+                print("Pilihan tidak valid.")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+```
+Fungsi informasiIklim() adalah Menampilkan informasi mengenai iklim. Data iklim diambil dari database dan ditampilkan dalam bentuk tabel. Pengguna dapat memilih opsi untuk melihat data lebih lanjut, melakukan pencarian, atau mengurutkan data.
+```
+def searchingIklim():
+    os.system("cls")
+    ambilDataIklim()
+
+    keyword = input("Masukkan Kota yang ingin dicari: ").lower()
+    found_kota = LinkedList.jumpSearch(keyword, "nama_kota")
+
+    if found_kota:
+        tabel = PrettyTable()
+        tabel.field_names = ["Nama Kota", "ID Iklim", "Kelembapan", "Curah Hujan", "Suhu Celcius", "Kecepatan Angin", "Kualitas Udara", "Rentan Tanggal"]
+        tabel.add_row([found_kota["nama_kota"], found_kota["id_iklim"], found_kota["kelembapan"], found_kota["curah_hujan"], found_kota["suhu_celcius"], found_kota["kecepatan_angin"],  found_kota["kualitas_udara"], found_kota["rentan_tanggal"]])
+        print(tabel)
+    else:
+        print("Data tidak ditemukan.")
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi searchingIklim() adalah Memungkinkan pengguna untuk melakukan pencarian data iklim berdasarkan nama kota. Hasil pencarian kemudian ditampilkan dalam bentuk tabel.
+```
+def sortingIklim():
+    os.system("cls")
+    LinkedList.clear()
+    ambilDataIklim()
+    daftarIklim = []
+    current = LinkedList.head
+    while current:
+        current.data["nama_kota"] = current.data["nama_kota"].lower()
+        daftarIklim.append(current.data)
+        current = current.next
+
+    print("Pilih urutan pengurutan:")
+    print("1. Ascending (A-Z)")
+    print("2. Descending (Z-A)")
+    urutan = input("» Masukkan pilihan Anda: ")
+
+    if urutan == '1':
+        sortedIklim = sorted(daftarIklim, key=lambda x: x["nama_kota"])
+    elif urutan == '2':
+        sortedIklim = sorted(daftarIklim, key=lambda x: x["nama_kota"], reverse=True)
+    else:
+        print("Pilihan tidak valid.")
+        return
+
+    tabel = PrettyTable()
+    tabel.field_names = ["Nama Kota", "ID Iklim", "Kelembapan", "Curah Hujan", "Suhu Celcius", "Kecepatan Angin", "Kualitas Udara", "Rentan Tanggal"]
+    for column in sortedIklim:
+        nama_kota = column["nama_kota"]
+        id_iklim = column["id_iklim"]
+        kelembapan = user_view.potong_teks(column["kelembapan"], 20)
+        curah_hujan = user_view.potong_teks(column["curah_hujan"], 20)
+        suhu_celcius = user_view.potong_teks(column["suhu_celcius"], 20)
+        kecepatan_angin = user_view.potong_teks(column["kecepatan_angin"], 20)
+        kualitas_udara = user_view.potong_teks(column["kualitas_udara"], 20)
+        rentan_tanggal = user_view.potong_teks(column["rentan_tanggal"], 20)
+        tabel.add_row([nama_kota, id_iklim, kelembapan, curah_hujan, suhu_celcius, kecepatan_angin, kualitas_udara, rentan_tanggal])
+    print(tabel)
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi sortingIklim() adalah Mengurutkan data iklim berdasarkan nama kota, baik secara ascending (A-Z) maupun descending (Z-A). Hasil pengurutan ditampilkan dalam bentuk tabel.
+```
+def ambilDataIklim():
+    try:
+        LinkedList.clear()
+        query = "SELECT * FROM data_Iklim"
+        cursor = db_mysql.connection.cursor()
+        cursor.execute(query)
+        hasil = cursor.fetchall()
+        for column in hasil:
+            dataIklim = {
+                "nama_kota": column[0],
+                "id_iklim": column[1],
+                "kelembapan": column[2],
+                "curah_hujan": column[3],
+                "suhu_celcius": column[4],
+                "kecepatan_angin": column[5],
+                "kualitas_udara": column[6],
+                "rentan_tanggal": column[7]
+            }
+            LinkedList.insert(dataIklim)
+    except mysql.connector.Error as err:
+        print(f"Error MySQL: {err.msg}")
+        input("Tekan enter untuk melanjutkan...")
+```
+Fungsi ambilDataIklim() adalah Mengambil data iklim dari database dan memasukkannya ke dalam linked list. Data ini kemudian digunakan untuk pencarian dan pengurutan.
+```
+def informasiKota():
+    user_view.lihatData()
+    try:
+        cursor = db_mysql.connection.cursor()
+        query_count = "SELECT COUNT(*) FROM data_kota"
+        cursor.execute(query_count)
+        total_rows = cursor.fetchone()[0]
+
+        if total_rows == 0:
+            print("Tidak ada kota yang terdaftar.")
+            return
+
+        current_row = 0
+        page = 1
+        no = 1 
+        while current_row < total_rows:
+            query_select = "SELECT * FROM data_kota LIMIT 25 OFFSET %s"
+            cursor.execute(query_select, (current_row,))
+            hasil = cursor.fetchall()
+            
+            os.system("cls")
+            print(f"Daftar Kota - Halaman {page}:")
+            pt = PrettyTable()
+            pt.field_names = ["No", "Nama Kota", "Provinsi", "Deskripsi Iklim", "Struktur Kota", "Populasi"]
+            for kota in hasil:
+                pt.add_row([no, kota[0], kota[1], kota[2], kota[3], kota[4]])
+                no += 1 
+            print(pt)
+
+            user_view.opsiLihatKota()
+            option = input("» Masukkan pilihan Anda: ")
+
+            if option == '1':
+                current_row += 25
+                page += 1
+            elif option == '2':
+                if page > 1:
+                    current_row -= 25
+                    page -= 1
+                else:
+                    os.system("cls")
+                    print("Anda sudah berada di halaman pertama.")
+                    time.sleep(1)
+            elif option == '3':
+                sortingKota()
+            elif option == '4':
+                searchingKota()
+            elif option == '5':
+                return
+            else:
+                print("Pilihan tidak valid.")
+    except mysql.connector.Error as err:
+        print("Error:", err)
+```
+Fungsi informasiKota() adalah Menampilkan informasi mengenai kota. Data kota diambil dari database dan ditampilkan dalam bentuk tabel. Pengguna dapat memilih opsi untuk melihat data lebih lanjut, melakukan pencarian, atau mengurutkan data.
+```
+def searchingKota():
+    os.system("cls")
+    ambilDataKota()
+
+    print("Pilih jenis pencarian:")
+    print("1. Search by Nama Kota")
+    print("2. Search by Provinsi")
+    option = input("» Masukkan pilihan Anda: ")
+
+    if option == '1':
+        keyword = input("Masukkan Kota yang ingin dicari: ").lower()
+        found_kota = LinkedList.jumpSearch(keyword, "nama_kota")
+    elif option == '2':
+        keyword = input("Masukkan Provinsi yang ingin dicari: ").lower()
+        query_select = "SELECT * FROM data_kota WHERE LOWER(provinsi) = %s"
+        cursor = db_mysql.connection.cursor()
+        cursor.execute(query_select, (keyword,))
+        provinsi = cursor.fetchall()
+
+        if not provinsi:
+            print("Data tidak ditemukan.")
+            return
+
+        print(f"Data Provinsi '{keyword.capitalize()}':")
+        pt = PrettyTable()
+        pt.field_names = ["No", "Nama Kota", "Provinsi", "Deskripsi Iklim", "Struktur Kota", "Populasi"]
+        no = 1
+        for column in provinsi:
+            pt.add_row([no, column[0], column[1], column[2], column[3], column[4]])
+            no += 1
+        print(pt)
+
+        print(f"Total Data dari {keyword.capitalize()}: {len(provinsi)}")
+        input("Tekan enter untuk melanjutkan...")
+        return
+    else:
+        print("Pilihan tidak valid.")
+        return
+
+    if found_kota:
+        tabel = PrettyTable()
+        tabel.field_names = ["No", "Nama Kota", "Provinsi", "Deksripsi Iklim", "Struktur Kota", "Populasi"]
+        tabel.add_row([1, found_kota["nama_kota"], found_kota["provinsi"], found_kota["deskripsi_iklim"], found_kota["struktur_kota"], found_kota["populasi"]])
+        print(tabel)
+    else:
+        print("Data tidak ditemukan.")
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi searchingKota() adalah Memungkinkan pengguna untuk melakukan pencarian data kota berdasarkan nama kota atau provinsi. Hasil pencarian kemudian ditampilkan dalam bentuk tabel.
+```
+def sortingKota():
+    os.system("cls")
+    LinkedList.clear()
+    ambilDataKota()
+    daftarKota = []
+    current = LinkedList.head
+    no = 1
+    while current:
+        current.data["nama_kota"] = current.data["nama_kota"].lower()
+        daftarKota.append(current.data)
+        current = current.next
+
+    print("Pilih urutan pengurutan:")
+    print("1. Ascending (A-Z)")
+    print("2. Descending (Z-A)")
+    urutan = input("» Masukkan pilihan Anda: ")
+
+    if urutan == '1':
+        sortedKota = sorted(daftarKota, key=lambda x: x["nama_kota"])
+    elif urutan == '2':
+        sortedKota = sorted(daftarKota, key=lambda x: x["nama_kota"], reverse=True)
+    else:
+        print("Pilihan tidak valid.")
+        return
+
+    tabel = PrettyTable()
+    tabel.field_names = ["No", "Nama Kota", "Provinsi", "Deskripsi Iklim", "Struktur Kota", "Populasi"]
+    for column in sortedKota:
+        tabel.add_row([no, column["nama_kota"], column["provinsi"], column["deskripsi_iklim"], column["struktur_kota"], column["populasi"]])
+        no += 1
+    print(tabel)
+    input("Tekan enter untuk melanjutkan...")
+```
+Fungsi sortingKota() adalah Mengurutkan data kota berdasarkan nama kota, baik secara ascending (A-Z) maupun descending (Z-A). Hasil pengurutan ditampilkan dalam bentuk tabel.
+```
+def ambilDataKota():
+    try:
+        LinkedList.clear()
+        query = "SELECT * FROM data_kota"
+        cursor = db_mysql.connection.cursor()
+        cursor.execute(query)
+        hasil = cursor.fetchall()
+        for kota in hasil:
+            dataKota = {
+                "nama_kota": kota[0],
+                "provinsi": kota[1],
+                "deskripsi_iklim": kota[2],
+                "struktur_kota": kota[3],
+                "populasi": kota[4]
+            }
+            LinkedList.insert(dataKota)
+    except mysql.connector.Error as err:
+        print(f"Error MySQL: {err.msg}")
+        input("Tekan enter untuk melanjutkan...")
+```
+Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkannya ke dalam linked list. Data ini kemudian digunakan untuk pencarian dan pengurutan.
+
+##
+### D. CARA PENGGUNAAN
