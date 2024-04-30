@@ -290,9 +290,13 @@ def hapusUser():
             cursor.execute(delete_query, (nickname,))
             db_mysql.connection.commit()
             print("Pengguna berhasil dihapus dari database.")
+            time.sleep(1)
         elif confirm == 'n':
             print("Penghapusan dibatalkan.")
+            time.sleep(1)
         else:
             print("Masukan tidak valid. Penghapusan dibatalkan.")
+            time.sleep(1)
     except mysql.connector.Error as err:
         print("Error:", err)
+        time.sleep(1)

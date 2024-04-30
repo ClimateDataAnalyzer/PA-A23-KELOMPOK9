@@ -341,9 +341,13 @@ def hapusIklim():
             cursor.execute(delete_query, (keyword,))
             db_mysql.connection.commit()
             print("Data Iklim berhasil dihapus dari database.")
+            time.sleep(1)
         elif confirm == 'n':
             print("Penghapusan dibatalkan.")
+            time.sleep(1)
         else:
             print("Masukan tidak valid. Penghapusan dibatalkan.")
+            time.sleep(1)
     except mysql.connector.Error as err:
         print("Error:", err)
+        time.sleep(1)
