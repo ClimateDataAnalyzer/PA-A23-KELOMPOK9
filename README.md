@@ -22,9 +22,19 @@ Dirancang dengan bahasa pemograman Python dan Diintegrasikan dengan Database unt
 - User View : Menjalankan dan mengatur Tampilan Informasi Data dan alur program untuk User seperti Informasi Iklim,Informasi Kota,Informasi Akun.
 
 ### C. FITUR DAN FUNGSIONALITAS
+Adapula Modul Library yang digunakan dalam Program ini yaitu :
 - PrettyTable : digunakan untuk membuat tabel ASCII dengan format yang menarik secara visual.
 - OS : menyediakan cara untuk berinteraksi dengan sistem operasi.
 - SYS : Digunakan untuk parameter spesifik sistem dan fungsi.
 - mysql.connector : digunakan untuk menghubungkan aplikasi Python dengan basis data MySQL.
 - PWInput : digunakan untuk memasukkan kata sandi secara aman dari pengguna.
 - Time : Menyediakan berbagai fungsi terkait waktu dalam Python, contohnya yaitu sleep.
+- Math : Digunakan untuk melakukan berbagai perhitungan matematika dalam bahasa pemrograman Python.
+
+Terdapat juga Penjelasan Program Yaitu :
+### PENJELASAN PROGRAM
+#### MODEL
+Model - db_mysql.py
+##
+<tab><tab>code/text here
+
