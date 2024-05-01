@@ -1843,29 +1843,54 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 3. Jika user sudah berhasil Register dan melakukan Login, user akan ditampilkan data iklim dari asal kota mereka dan menu pilihan yaitu Informasi iklim setiap kota, Informasi kota, Informasi saya, dan keluar.
 - _Tampilan Menu User_
 
-![MenuUser](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/fa265723-3dc2-4336-bf4f-d61445a8a5ca)
+![Menu User](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/fa265723-3dc2-4336-bf4f-d61445a8a5ca)
 
 4. Jika user memilih Informasi iklim setiap kota maka user akan ditampilkan data iklim setiap kota yang ada. Selain ditampilkan data iklim setiap kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, sorting berdasarkan Nama kota, searching nama kota, dan kembali. Pada bagian sorting terdapat pilihan ascending dan descending.
 
 - _Tampilan Informasi Iklim_
 
-![InformasiIklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/3920e1a6-4845-4626-9f0e-9ac0ab0ab08f)
+![Informasi Iklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/3920e1a6-4845-4626-9f0e-9ac0ab0ab08f)
 
 5. Jika user memilih Informasi kota maka user akan ditampilkan data-data kota yang ada. Setelah menampilkan data kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, sorting berdasarkan Nama kota, searching nama kota, dan kembali. Pada bagian sorting terdapat pilihan ascending dan descending.
 
 - _Tampilan Informasi Kota_
 
-![InformasiKota](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/7d0fb0a8-9765-4d13-9bcf-cc34c010e811)
+![Informasi Kota](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/7d0fb0a8-9765-4d13-9bcf-cc34c010e811)
 
 6. Jika user memilih informasi saya maka user akan ditampilkan informasi mengenai nicknamenya, email, dan asal kota dari akun user tersebut.
 
 - _Tampilan Informasi Akun_
 
-![InformasiAkun](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4bfd15a0-593e-442d-9b05-5571fe57f123)
+![Informasi Akun](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4bfd15a0-593e-442d-9b05-5571fe57f123)
 
 7. Terakhir user dapat memilih keluar jika ingin keluar dari program dan kembali ke menu utama login dan register
 
 
-**Penggunaan Admin**
+**PENGGUNAAN ADMIN**
+1. Saat pada bagian menu utama admin hanya perlu login dengan menggunakan akun admin yang tersedia.
 
- 
+2. Setelah berhasil login dengan akun admin, kalian akan diberikan tampilan menu admin dengan beberapa pilihan yaitu data user, informasi kota, data iklim, dan keluar.
+
+- _Tampilan Menu Admin_
+
+![Menu Admin](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/e50429ce-cf40-439f-8331-03cbbc5c333c)
+
+3. Jika admin memilih data user maka akan ditampilkan pilihan Tambah User, Lihat user, Update user, Hapus user, dan keluar. Pada menu ini admin dapat melakukan CRUD pada data user.
+
+- _Tampilan pada saat memilih data user_
+
+![Pilih Data User](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/ca3cab0d-04fb-48be-a532-d5bb684cb3e3)
+
+4. Jika admin memilih Informasi kota maka admin akan ditampilkan pilihan Tambah kota, Lihat kota, Update kota, Hapus kota, dan keluar. Pada menu ini admin dapat melakukan CRUD pada data kota.
+
+- _Tampilan pada saat memilih Informasi Kota_
+
+![Pilih Data Kota](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4175ae7d-1e3e-48d7-a302-80c4939e00d8)
+
+5. Jika admin memilih Data Iklim maka admin akan ditampilkan pilihan Tambah Iklim, Lihat Iklim, Update Iklim, Hapus Iklim, dan keluar. Pada menu ini admin dapat melakukan CRUD pada data iklim.
+
+- _Tampilan pada saat memilih Data Iklim_
+
+![Pilih Data Iklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/e8be6973-b60f-4d1c-ae71-fb4e7938c5af)
+
+6. Lalu admin juga dapat memilih keluar jika sudah ingin keluar dari menu admin dan kembali ke menu utama yaitu menu login 
