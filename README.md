@@ -1822,3 +1822,11 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 ##
 ### D. CARA PENGGUNAAN
+**PENGGUNAAN USER**
+1. Dimenu awal user dapat memilih 3 pilihan yaitu register, login, dan keluar
+_tampilan menu utama_
+![Menu Utama](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/f9b8f713-2a54-4777-8ce8-872ededa4728)
+
+
+
+
