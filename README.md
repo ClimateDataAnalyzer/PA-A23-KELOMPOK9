@@ -1848,9 +1848,10 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 ![InformasiIklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/3920e1a6-4845-4626-9f0e-9ac0ab0ab08f)
 
- - _Tampilan jika memilih sorting_
+   - _Tampilan jika memilih sorting_
 
- ![image](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/8c4cebd3-ade9-4713-9cd4-f299da0a3471)
+   ![image](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/2646cd9f-dab7-49d0-92f4-2547404f6bcc)
+
 
 
 
