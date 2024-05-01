@@ -8,6 +8,9 @@ Dirancang dengan bahasa pemograman Python dan Diintegrasikan dengan Database unt
 
 ##
 ### B. STRUKTUR PROJECT
+
+### FLOWCHART
+![FLOWCHART PA](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/dc15b4d0-434a-44e9-9ce0-c4f4d40fb8af)
 **1. Controller** : Digunakan untuk memberikan kontrol algoritma dan fungsi pada program dan menambahkan fungsi fitur dan jalannya program.
 - Account Controller : disini merupakan algoritma dan jalannya program pada Login dan Registarasi.
 - Admin Controller : terdapat 3 File yang sama sama memberikan kontrol algoritma pada admin seperti CRUD pada entitas user,data iklim dan data kota.
@@ -33,9 +36,6 @@ Adapula Modul Library yang digunakan dalam Program ini yaitu :
 - Time : Menyediakan berbagai fungsi terkait waktu dalam Python, contohnya yaitu sleep.
 - Math : Digunakan untuk melakukan berbagai perhitungan matematika dalam bahasa pemrograman Python.
 ### PENJELASAN PROGRAM
-#
-### FLOWCHART
-![FLOWCHART PA drawio_compressed](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/dc15b4d0-434a-44e9-9ce0-c4f4d40fb8af)
 #
 ### MODEL
 - Model - db_mysql.py
