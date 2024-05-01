@@ -34,6 +34,9 @@ Adapula Modul Library yang digunakan dalam Program ini yaitu :
 - Math : Digunakan untuk melakukan berbagai perhitungan matematika dalam bahasa pemrograman Python.
 ### PENJELASAN PROGRAM
 #
+### FLOWCHART
+![FLOWCHART PA drawio_compressed](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/dc15b4d0-434a-44e9-9ce0-c4f4d40fb8af)
+#
 ### MODEL
 - Model - db_mysql.py
 ```
@@ -1863,6 +1866,6 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 7. Terakhir user dapat memilih keluar jika ingin keluar dari program dan kembali ke menu utama login dan register
 
 
-
+**Penggunaan Admin**
 
  
