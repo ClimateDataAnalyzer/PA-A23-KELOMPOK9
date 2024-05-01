@@ -1898,7 +1898,7 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 #
 ***Setiap CRUD pada menu admin memiliki fungsi yang sama dan ini adalah salah satu contoh dari penggunaan CRUD***
 
-**Contoh** 
+**CONTOH** 
 - CREATE
 
 ![CREATE pada data user](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4ac4adcf-2b9c-42c4-8e54-15f0a92b96df)
