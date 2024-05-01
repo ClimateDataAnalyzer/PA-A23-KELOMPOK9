@@ -1840,7 +1840,18 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 3. Jika user sudah berhasil Register dan melakukan Login, user akan ditampilkan data iklim dari asal kota mereka dan menu pilihan yaitu Informasi iklim setiap kota, Informasi kota, Informasi saya, dan keluar.
 - _Tampilan Menu User_
 
-![MenuUser](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/f78979f2-3048-4249-b3b0-f57e71b218b9)
+![MenuUser](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/fa265723-3dc2-4336-bf4f-d61445a8a5ca)
+
+4. Jika user memilih Informasi iklim setiap kota maka user akan ditampilkan data iklim setiap kota yang ada. Selain ditampilkan data iklim setiap kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, orting berdasarkan Nama kota, searching nama kota, dan kembali.
+
+- _Tampilan Informasi Iklim_
+
+![InformasiIklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/3920e1a6-4845-4626-9f0e-9ac0ab0ab08f)
+
+    - _Tampilan jika memilih sorting_
+
+    ![image](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/8c4cebd3-ade9-4713-9cd4-f299da0a3471)
+
 
 
  
