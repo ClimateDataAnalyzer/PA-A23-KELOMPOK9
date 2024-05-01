@@ -1825,6 +1825,7 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 ##
 ### D. CARA PENGGUNAAN
+#
 **PENGGUNAAN USER**
 1. Dimenu awal user dapat memilih 3 pilihan yaitu register, login, dan keluar
 - _Tampilan Menu Utama_
@@ -1865,7 +1866,7 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 7. Terakhir user dapat memilih keluar jika ingin keluar dari program dan kembali ke menu utama login dan register
 
-
+#
 **PENGGUNAAN ADMIN**
 1. Saat pada bagian menu utama admin hanya perlu login dengan menggunakan akun admin yang tersedia.
 
