@@ -1897,6 +1897,7 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 6. Lalu admin juga dapat memilih keluar jika sudah ingin keluar dari menu admin dan kembali ke menu utama yaitu menu login
 #
 ***Setiap CRUD pada menu admin memiliki fungsi yang sama dan ini adalah salah satu contoh dari penggunaan CRUD***
+
 **Contoh** 
 - CREATE
 
