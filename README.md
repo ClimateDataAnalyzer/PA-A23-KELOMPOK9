@@ -1894,4 +1894,29 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 ![Pilih Data Iklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/e8be6973-b60f-4d1c-ae71-fb4e7938c5af)
 
-6. Lalu admin juga dapat memilih keluar jika sudah ingin keluar dari menu admin dan kembali ke menu utama yaitu menu login 
+6. Lalu admin juga dapat memilih keluar jika sudah ingin keluar dari menu admin dan kembali ke menu utama yaitu menu login
+#
+***Setiap CRUD pada menu admin memiliki fungsi yang sama dan ini adalah salah satu contoh dari penggunaan CRUD***
+**Contoh** 
+- CREATE
+
+![CREATE pada data user](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4ac4adcf-2b9c-42c4-8e54-15f0a92b96df)
+
+*Pada saat CREATE maka admin akan diminta untuk memasukkan data-data yang diperlukan*
+
+- READ
+
+![READ pada data user](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/d2ac7e56-f303-4249-b68d-55b887d97a18)
+
+*Setiap memilih READ pada akan ada pilihan untuk Sorting dan Searching*
+
+- UPDATE
+
+![UPDATE pada data user](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/a3d7a30f-95b9-4348-83aa-e5d8049afcbd)
+
+*Setiap memilih UPDATE akan ada pilihan untuk data apa yang ingin diupdate oleh admin*
+
+- DELETE
+
+![READ pada data user](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/ca225b0f-0a2f-4b27-aacf-c175e84f915f)
+
