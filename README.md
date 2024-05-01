@@ -1830,15 +1830,15 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 2. Jika user memilih register maka user akan diminta untuk membuat akun dengan memasukkan _nickname, email, password,_ dan _asal kota_. Namun, jika user sudah memiliki akun user dapat langsung memilih pilihan login untuk masuk dengan akun yang sudah ada dengan menggunakan _nickname dan password_.
 
-_Tampilan Menu Register_
+- _Tampilan Menu Register_
 ![Register](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/bda1f637-4809-4283-a0fd-660eed3f5e39)
 
-_Tampilan Menu Login_
+- _Tampilan Menu Login_
 ![Login](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/ab7e5861-67e0-47a0-874a-84de91f2b7d1)
 
 3. Jika user sudah berhasil Register dan melakukan Login, user akan ditampilkan data iklim dari asal kota mereka dan menu pilihan yaitu Informasi iklim setiap kota, Informasi kota, Informasi saya, dan keluar.
 
-_Tampilan Menu User_
+- _Tampilan Menu User_
 ![MenuUser](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/f78979f2-3048-4249-b3b0-f57e71b218b9)
 
 
