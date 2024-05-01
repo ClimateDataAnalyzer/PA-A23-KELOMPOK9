@@ -1842,15 +1842,25 @@ Fungsi ambilDataKota() adalah Mengambil data kota dari database dan memasukkanny
 
 ![MenuUser](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/fa265723-3dc2-4336-bf4f-d61445a8a5ca)
 
-4. Jika user memilih Informasi iklim setiap kota maka user akan ditampilkan data iklim setiap kota yang ada. Selain ditampilkan data iklim setiap kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, orting berdasarkan Nama kota, searching nama kota, dan kembali.
+4. Jika user memilih Informasi iklim setiap kota maka user akan ditampilkan data iklim setiap kota yang ada. Selain ditampilkan data iklim setiap kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, sorting berdasarkan Nama kota, searching nama kota, dan kembali. Pada bagian sorting terdapat pilihan ascending dan descending.
 
 - _Tampilan Informasi Iklim_
 
 ![InformasiIklim](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/3920e1a6-4845-4626-9f0e-9ac0ab0ab08f)
 
-   - _Tampilan jika memilih sorting_
+5. Jika user memilih Informasi kota maka user akan ditampilkan data-data kota yang ada. Setelah menampilkan data kota user juga akan mendapat beberapa pilihan lagi yaitu halaman selanjutnya, halaman sebelumnya, sorting berdasarkan Nama kota, searching nama kota, dan kembali. Pada bagian sorting terdapat pilihan ascending dan descending.
 
-   ![image](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/2646cd9f-dab7-49d0-92f4-2547404f6bcc)
+- _Tampilan Informasi Kota_
+
+![InformasiKota](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/7d0fb0a8-9765-4d13-9bcf-cc34c010e811)
+
+6. Jika user memilih informasi saya maka user akan ditampilkan informasi mengenai nicknamenya, email, dan asal kota dari akun user tersebut.
+
+- _Tampilan Informasi Akun_
+
+![InformasiAkun](https://github.com/ClimateDataAnalyzer/PA-A23-KELOMPOK9/assets/144346363/4bfd15a0-593e-442d-9b05-5571fe57f123)
+
+7. Terakhir user dapat memilih keluar jika ingin keluar dari program dan kembali ke menu utama login dan register
 
 
 
